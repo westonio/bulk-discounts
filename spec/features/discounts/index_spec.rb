@@ -91,12 +91,23 @@ RSpec.describe "Merchant's Discounts Index Page", type: :feature do
       end
     end
 
-    it "has a link to create a new Discount, that takes me to a page to add a new Discount" do
+    it "Has a link to create a new Discount, that takes me to a page to add a new Discount" do
       expect(page).to have_link("Add New Discount", href: new_merchant_discount_path(@merchant1))
 
       click_link("Add New Discount")
 
       expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+    end
+
+    it "Has a link next to each bulk discount to delete it" do
+      within("#discount-list") do
+        expect(page).to have_button("Delete", id: "delete-#{@discount1.id}", count: 1)
+        expect(page).to have_button("Delete", id: "delete-#{@discount2.id}", count: 1)
+        expect(page).to have_button("Delete", id: "delete-#{@discount3.id}", count: 1)
+        expect(page).to have_button("Delete", id: "delete-#{@discount4.id}", count: 1)
+
+        expect(page).to_not have_button("Delete", id: "delete-#{@discount5.id}")
+      end
     end
   end
 end
