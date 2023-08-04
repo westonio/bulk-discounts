@@ -78,3 +78,13 @@
     margin-right: 80px;
     margin-left: 10px
  }
+ 
+ #discount-list li, #add-discount {
+    display: flex;
+    padding: 10px 5px;
+ }
+
+#discount-list button {
+   display:inline-block;
+   margin-left: 20px;
+}
