@@ -16,5 +16,13 @@ RSpec.describe 'Merchant Discount Show Page', type: :feature do
 
       expect(page).to_not have_content(@discount2.percent_discount)
     end
+
+    it "Has a button to edit the discount" do
+      expect(page).to have_button("Edit")
+
+      find("#edit-discount-#{@discount1.id}").click
+
+      expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount1))
+    end
   end
 end

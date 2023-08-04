@@ -33,7 +33,7 @@ RSpec.describe 'Merchant Discounts #new Page', type: :feature do
       within("#new-discount") do
         click_button "Add Discount"
       end
-      expect(page).to have_content("Discount Not created: Required information missing")
+      expect(page).to have_content("Discount Not Created: Required information missing")
     end
   end
 end
