@@ -90,5 +90,13 @@ RSpec.describe "Merchant's Discounts Index Page", type: :feature do
         expect(page).to_not have_link(href: merchant_discount_path(@merchant2, @discount5))
       end
     end
+
+    it "has a link to create a new Discount, that takes me to a page to add a new Discount" do
+      expect(page).to have_link("Add New Discount", href: new_merchant_discount_path(@merchant1))
+
+      click_link("Add New Discount")
+
+      expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+    end
   end
 end
