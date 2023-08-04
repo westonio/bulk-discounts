@@ -1,5 +1,5 @@
 class DiscountsController < ApplicationController
-  before_action :find_merchant_and_discount, only: [:show, :destroy]
+  before_action :find_merchant_and_discount, only: [:show, :edit, :update, :destroy]
   before_action :find_merchant, only: [:index, :new, :create]
 
   def index
@@ -20,8 +20,22 @@ class DiscountsController < ApplicationController
       redirect_to merchant_discounts_path(@merchant)
       flash[:success] = "Discount Successfully Added!" 
     else
-      flash[:danger] = "Discount Not created: Required information missing"
-      render :new
+      flash[:danger] = "Discount Not Created: Required information missing"
+      redirect_to new_merchant_discount_path(@merchant)
+    end
+  end
+
+  def edit
+
+  end
+
+  def update
+    if @discount.update(discount_params)
+      redirect_to merchant_discount_path(@merchant, @discount)
+      flash[:success] = "Discount Successfully Updated!"
+    else
+      flash[:danger] = "Discount Not Updated: Fields cannot be empty"
+      redirect_to edit_merchant_discount_path(@merchant, @discount)
     end
   end
 
