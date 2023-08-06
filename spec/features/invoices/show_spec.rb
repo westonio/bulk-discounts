@@ -64,7 +64,23 @@ RSpec.describe "invoices show" do
     expect(page).to have_content(@invoice_1.status)
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
   end
-
+  
+  it "shows the total revenue for this invoice" do
+    expect(page).to have_content(@invoice_1.total_revenue)
+  end
+  
+  it "shows the total discount for this invoice" do
+    within("#invoice-info") do
+      expect(page).to have_content(@invoice_1.total_discount)
+    end
+  end
+  
+  it "shows the total discounted revenue (revenue after discounts)" do
+    within("#invoice-info") do
+      expect(page).to have_content(@invoice_1.total_discounted_revenue)
+    end
+  end
+  
   it "shows the customer information" do
     expect(page).to have_content(@customer_1.first_name)
     expect(page).to have_content(@customer_1.last_name)
@@ -76,12 +92,19 @@ RSpec.describe "invoices show" do
     expect(page).to have_content(@ii_1.quantity)
     expect(page).to have_content(@ii_1.unit_price)
     expect(page).to_not have_content(@ii_4.unit_price)
-
   end
 
-  it "shows the total revenue for this invoice" do
-    expect(page).to have_content(@invoice_1.total_revenue)
+  it "shows the discount applied to each item and links to discount's show page" do
+    expect(page).to have_link("#{@ii_1.discount_applied.percent_discount}%")
+    expect(page).to have_link("#{@ii_11.discount_applied.percent_discount}%")
   end
+
+  it "shows a dash if the item has no discount applied" do
+    within("#the-status-#{@ii_12.id}") do
+      expect(page).to have_content("-")
+    end
+  end
+
 
   it "shows a select field to update the invoice status" do
     within("#the-status-#{@ii_1.id}") do
@@ -93,18 +116,6 @@ RSpec.describe "invoices show" do
 
     within("#current-invoice-status") do
       expect(page).to_not have_content("in progress")
-    end
-  end
-
-  it "shows the total discount for this invoice" do
-    within("#invoice-info") do
-      expect(page).to have_content(@invoice_1.total_discount)
-    end
-  end
-
-  it "shows the total discounted revenue (revenue after discounts)" do
-    within("#invoice-info") do
-      expect(page).to have_content(@invoice_1.total_discounted_revenue)
     end
   end
 end
