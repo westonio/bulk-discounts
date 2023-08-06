@@ -33,19 +33,37 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.total_revenue).to eq(150)
     end
 
-    it "#total_discount" do
-      first = @ii_1.quantity * @ii_1.unit_price * (@discount_1.percent_discount / 100.0)
-      third = @ii_3.quantity * @ii_3.unit_price * (@discount_2.percent_discount / 100.0)
-      expected = first + third
+    describe "Discounts and its Conditions" do
+      it "only applies greatest discount when item meets threshold for multiple discounts" do
+        @ii_2.destroy
+        @ii_3.destroy    
+        expect(@invoice_1.invoice_items).to eq([@ii_1])
+    
+        expect(@invoice_1.total_discount).to eq(18) #invoice item #1 meets boths discount thresholds (5 and 8), so only 20% should be applied
+      end
+      
+      it "only applies the discount to the invoice item(s) that meets the threshold(s)" do
+        @ii_3.destroy
+        expect(@invoice_1.invoice_items).to eq([@ii_1, @ii_2])
 
-      expect(@invoice_1.total_discount).to eq(expected) #23
-    end
+        expect(@invoice_1.total_discount).to eq(18) #invoice item # 2 does not meet any of the discount thresholds
+      end
 
-    it "#total_discounted_revenue" do
-      first = @ii_1.quantity * @ii_1.unit_price * (@discount_1.percent_discount / 100.0)
-      third = @ii_3.quantity * @ii_3.unit_price * (@discount_2.percent_discount / 100.0)
-      expected = @invoice_1.total_revenue - first - third
-      expect(@invoice_1.total_discounted_revenue).to eq(expected) #127
+      it "#total_discount" do
+        first = @ii_1.quantity * @ii_1.unit_price * (@discount_1.percent_discount / 100.0)
+        third = @ii_3.quantity * @ii_3.unit_price * (@discount_2.percent_discount / 100.0)
+        expected = first + third
+
+        expect(@invoice_1.total_discount).to eq(expected) #23
+      end
+
+      it "#total_discounted_revenue" do
+        first = @ii_1.quantity * @ii_1.unit_price * (@discount_1.percent_discount / 100.0)
+        third = @ii_3.quantity * @ii_3.unit_price * (@discount_2.percent_discount / 100.0)
+        expected = @invoice_1.total_revenue - first - third
+        
+        expect(@invoice_1.total_discounted_revenue).to eq(expected) #127
+      end      
     end
   end
 end
