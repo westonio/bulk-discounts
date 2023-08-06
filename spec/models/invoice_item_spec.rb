@@ -57,15 +57,15 @@ RSpec.describe InvoiceItem, type: :model do
     end
 
     it "Finds the max percent discount for an invoice item" do
-      expect(@ii_1.discount_applied.find_max_percent).to eq(@discount_1.percent_discount)
-      expect(@ii_2.discount_applied.find_max_percent).to eq(@discount_2.percent_discount)
-      expect(@ii_3.discount_applied.find_max_percent).to eq(nil)
+      expect(@ii_1.find_max_percent).to eq(@discount_1.percent_discount)
+      expect(@ii_2.find_max_percent).to eq(@discount_2.percent_discount)
+      expect(@ii_3.find_max_percent).to eq(nil)
     end
 
     it "finds invoice item's #discount_applied" do
-      expect(@ii_1.discount_applied.discount_id).to eq(@discount_1.id)
-      expect(@ii_2.discount_applied.discount_id).to eq(@discount_2.id)
-      expect(@ii_3.discount_applied&.discount_id).to eq(nil) # does not meet quantity threshold
+      expect(@ii_1.discount_applied.id).to eq(@discount_1.id)
+      expect(@ii_2.discount_applied.id).to eq(@discount_2.id)
+      expect(@ii_3.discount_applied&.id).to eq(nil) # does not meet quantity threshold
     end
   end
 end
