@@ -23,11 +23,14 @@
   <br>
   <h4>Items on this Invoice:</h4>
   <table class="table">
+
+
     <thead>
       <tr class="tr">
         <th class="th1">Item Name</th>
         <th class="th1">Quantity</th>
         <th class="th1">Unit Price</th>
+        <th class="th1">Discount Applied</th>
         <th class="th1">Status</th>
       </tr>
     </thead>
@@ -39,12 +42,17 @@
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
+            <% if i.discount_applied.nil? %>
+              <td style="text-align:center"> - </td>
+            <% else %>
+              <td style="text-align:center"><%= link_to "#{i.discount_applied.percent_discount}%", merchant_discount_path(@merchant, i.discount_applied.id) %></td>
+            <% end %>
             <td style="text-align:center">
               <%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
                 <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                 <%= f.submit 'Update Invoice' %>
               <% end %>
-              </td>
+            </td>
           </tr>
         </section>
       <% end %>
