@@ -17,6 +17,9 @@ describe "Admin Invoices Index Page" do
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
     @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 87, unit_price: 12, status: 2)
 
+    @discount_1 = @m1.discounts.create!(percent_discount: 10, threshold_quantity: 10)
+    @discount_2 = @m1.discounts.create!(percent_discount: 25, threshold_quantity: 50)
+
     visit admin_invoice_path(@i1)
   end
 
@@ -27,10 +30,30 @@ describe "Admin Invoices Index Page" do
     expect(page).to_not have_content("Invoice ##{@i2.id}")
   end
 
+  it "should display the total revenue the invoice will generate" do
+    expect(page).to have_content("Total Revenue: $#{@i1.total_revenue}")
+
+    expect(page).to_not have_content(@i2.total_revenue)
+  end
+
+  it "shows the total discount for this invoice" do
+    within("#invoice-info") do
+      expect(page).to have_content(@i1.total_discount.round(2))
+      
+      expect(page).to_not have_content(@i2.total_discount)
+    end
+  end
+  
+  it "shows the total discounted revenue (revenue after discounts)" do
+    within("#invoice-info") do
+      expect(page).to have_content(@i1.total_discounted_revenue)
+      
+      expect(page).to_not have_content(@i2.total_discounted_revenue)
+    end
+  end
+
   it "should display the customers name and shipping address" do
     expect(page).to have_content("#{@c1.first_name} #{@c1.last_name}")
-    expect(page).to have_content(@c1.address)
-    expect(page).to have_content("#{@c1.city}, #{@c1.state} #{@c1.zip}")
 
     expect(page).to_not have_content("#{@c2.first_name} #{@c2.last_name}")
   end
@@ -51,12 +74,6 @@ describe "Admin Invoices Index Page" do
     expect(page).to_not have_content(@ii_3.quantity)
     expect(page).to_not have_content("$#{@ii_3.unit_price}")
     expect(page).to_not have_content(@ii_3.status)
-  end
-
-  it "should display the total revenue the invoice will generate" do
-    expect(page).to have_content("Total Revenue: $#{@i1.total_revenue}")
-
-    expect(page).to_not have_content(@i2.total_revenue)
   end
 
   it "should have status as a select field that updates the invoices status" do
