@@ -3,13 +3,13 @@ class DiscountsController < ApplicationController
   before_action :find_merchant, only: [:index, :new, :create]
 
   def index
-
+    @holidays = HolidaysService.new.next_three_holidays
   end
 
   def show
 
   end
-
+  
   def new
     @discount = Discount.new
   end

@@ -5,15 +5,26 @@
     <p class='col-12'>My Discounts</p>
   </div>
 
-  <h5 id="add-discount"><%= link_to "Add New Discount", new_merchant_discount_path(@merchant) %></h5>
-  <h4>Active Discounts:</h4>
+  <div class="mr-auto col-sm-6">
+    <h5 id="add-discount"><%= link_to "Add New Discount", new_merchant_discount_path(@merchant) %></h5>
+    <h4>Active Discounts:</h4>
 
-  <ul id="discount-list">
-    <% @merchant.discounts.each do |discount| %>
-      <li id="discount-<%= discount.id %>">
-        <p><%= link_to "Discount: #{number_to_percentage(discount.percent_discount, precision: 0)} ", merchant_discount_path(@merchant, discount.id) %>  - Quantity Threshold: <%= discount.threshold_quantity %></p>
-        <%= button_to "Delete", merchant_discount_path(@merchant, discount.id), method: :delete, id: "delete-#{discount.id}" %>
-      </li>
-    <% end %>
-  </ul>
+    <ul id="discount-list">
+      <% @merchant.discounts.each do |discount| %>
+        <li id="discount-<%= discount.id %>">
+          <p><%= link_to "Discount: #{number_to_percentage(discount.percent_discount, precision: 0)} ", merchant_discount_path(@merchant, discount.id) %>  - Quantity Threshold: <%= discount.threshold_quantity %></p>
+          <%= button_to "Delete", merchant_discount_path(@merchant, discount.id), method: :delete, id: "delete-#{discount.id}" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="ml-auto col-sm-6">
+    <h4>Upcoming Holidays</h4>
+    <ul>
+      <% @holidays.each do |holiday| %>
+        <li><%= holiday["name"] %> - <%= string_to_date(holiday["date"]) %></li>
+      <% end %>
+    </ul>
+  </div>
 </body>
