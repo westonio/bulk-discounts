@@ -16,4 +16,11 @@
       </li>
     <% end %>
   </ul>
+
+  <h4>Upcoming Holidays</h4>
+  <ul>
+    <% @holidays.each do |holiday| %>
+      <li><%= holiday["name"] %> - <%= string_to_date(holiday["date"]) %></li>
+    <% end %>
+  </ul>
 </body>
