@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :merchants, only: [:show] do
+  resources :merchants, only: [:index, :show] do
     resources :dashboard, only: [:index]
     resources :items, except: [:destroy]
     resources :item_status, only: [:update]
