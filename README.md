@@ -3,6 +3,7 @@
 [View Project as Merchants on Fly.io](https://esty-bulk-discounts.fly.dev/merchants) </br>
 [View Project as Admin on Fly.io](esty-bulk-discounts.fly.dev/admin/dashboard) </br>
 [GitHub Repo](https://github.com/westonio/bulk-discounts) </br>
+*Please Note: The deployed app is setup to disconnect from the server when not being used, and may take a few minutes to load.*
 
 ## Project Overview
 *Esty Bulk Discounts* is a comprehensive e-commerce project that integrates complex ActiveRecord queries to compute maximum percent discounts available for each item in an invoice, and calculating total discounts and revenue after applying discounts for invoices. The project also incorporates real-time data consumed from the Nager.Date API to display upcoming US holidays and gives merchants the functionality to manage discounts available to their products. 
