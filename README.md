@@ -4,8 +4,14 @@
 [View Project as Admin on Fly.io](esty-bulk-discounts.fly.dev/admin/dashboard) </br>
 [GitHub Repo](https://github.com/westonio/bulk-discounts) </br>
 
-### Project Overview
+## Project Overview
 *Esty Bulk Discounts* is a comprehensive e-commerce project that integrates complex ActiveRecord queries to compute maximum percent discounts available for each item in an invoice, and calculating total discounts and revenue after applying discounts for invoices. The project also incorporates real-time data consumed from the Nager.Date API to display upcoming US holidays and gives merchants the functionality to manage discounts available to their products. 
+
+### Languages, Frameworks, and Tools used
+- **Building:** Ruby, Rails, HTML, CSS, and some SQL
+- **Testing:** RSpec, Capybara, ShouldaMatchers
+- **Queries:** Postico, Rails Console, Rails Database Console
+- **Consuming API:** Faraday HTTP client library
 
 ### Project Challenges:
 - At the beginning of the project I was most nervous about writing a complex ActiveRecord query for determining the highest discount percentage available for each item on an invoice and calculating the total disounted revenue for invoices. Since this involved so many different models and required multiple aggregations/calculations, it was very intimidating. I think my feelings were justified because it was the most complex and challenging query I have had to write so far. However, it was extrememly rewarding to achieve the desired results using only ActiveRecord and not needing to lean on ruby methods.
