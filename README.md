@@ -2,7 +2,6 @@
 
 [View Project as Merchants on Fly.io](https://esty-bulk-discounts.fly.dev/merchants) </br>
 [View Project as Admin on Fly.io](esty-bulk-discounts.fly.dev/admin/dashboard) </br>
-[GitHub Repo](https://github.com/westonio/bulk-discounts) </br>
 > *Please Note: The deployed app is setup to disconnect from the server when not being used, and may take a few minutes to load.*
 
 ## Project Overview
